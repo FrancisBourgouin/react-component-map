@@ -2,50 +2,73 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { ComponentForm } from "./ComponentForm";
 
-function App() {
-  const [components, setComponents] = useState({});
-  const [maxDepth, setMaxDepth] = useState(0);
+const exampleComponentMap = {
+  a1: {
+    id: "a1",
+    name: "App",
+    children: ["b2", "c3"],
+    variables: ["1"]
+  },
+  b2: {
+    id: "b2",
+    name: "Header",
+    children: [],
+    variables: ["2"]
+  },
+  c3: {
+    id: "c3",
+    name: "BOB",
+    children: ["d4"],
+    variables: ["2"]
+  },
+  d4: {
+    id: "b2",
+    name: "Chicken",
+    children: [],
+    variables: ["2"]
+  }
+};
 
-  const parseComponents = (components, maxDepth) => {
-    // Ideally recursively go depth by depth to show content per row
-    // Force by picking max depth in state instead
-    // Add a condition so that there is a max of 5 components on one row
-    const output = [];
-    for (let depth = 0; depth <= maxDepth; depth++) {
-      const currentDepthElements = Object.values(components).filter(
-        component => component.depth === depth
-      );
-      const parsedElements = currentDepthElements.map(component => {
-        const { id, name, parent, depth } = component;
-        return (
-          <li>
-            <h1>{name}</h1>
-            <h2>ID: {id}</h2>
-            <h3>
-              Child of {components[parent] ? components[parent].name : "No one"}
-            </h3>
-            <h4>Depth of {depth}</h4>
-          </li>
-        );
-      });
-      const openList = <ul>{parsedElements}</ul>;
-      const parsedArray = ["<ul>", ...parsedElements, "</ul>"];
-      output.push(openList);
-    }
-    return output;
-  };
+const exampleVariablesList = {
+  "1": { id: "1", name: "componentList", content: "array", type: "state" },
+  "2": { id: "2", name: "components", content: "array", type: "props" }
+};
+
+// const ComponentItem = props => {
+//     return(
+
+//     )
+// }
+
+const ComponentList = props => {
+  const { current, components } = props;
+  const mappedComponents = current.children.map(componentId => {
+    // components[componentId];
+    return (
+      <ComponentList
+        components={components}
+        current={components[componentId]}
+      />
+    );
+  });
+  return (
+    <section>
+      <h1>Component : {current.name}</h1>
+      {mappedComponents}
+    </section>
+  );
+};
+
+const App = () => {
+  const [components, setComponents] = useState(exampleComponentMap);
+  const [variables, setVariables] = useState(exampleVariablesList);
+
   return (
     <div className='App'>
-      <h1>React Component Mapper</h1>
-      <ComponentForm
-        components={components}
-        setComponents={setComponents}
-        maxDepth={maxDepth}
-        setMaxDepth={setMaxDepth}
-      ></ComponentForm>
-      {parseComponents(components, maxDepth)}
+      <ComponentForm components={components} setComponents={setComponents} />
+      <ComponentList components={components} current={components["a1"]} />
     </div>
   );
-}
+};
 
 export default App;
