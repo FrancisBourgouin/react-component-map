@@ -9,7 +9,8 @@ import {
   emptyLocalStorage
 } from "./helpers";
 
-const componentContext = React.createContext();
+const ComponentsContext = React.createContext();
+const VariablesContext = React.createContext();
 
 const App = () => {
   const [components, setComponents] = useState(exampleComponentMap);
@@ -20,20 +21,21 @@ const App = () => {
   }, []);
 
   return (
-    <div className='App'>
-      <ComponentForm
-        components={components}
-        setComponents={setComponents}
-        availableProps={[]}
-      />
-      <ComponentList
-        components={components}
-        variables={variables}
-        current={components["App"]}
-      />
-      <button onClick={() => storeInLocalStorage(components)}>Save</button>
-      <button onClick={emptyLocalStorage}>Clear</button>
-    </div>
+    <ComponentsContext.Provider value={{ components, setComponents }}>
+      <VariablesContext.Provider value={{ variables, setVariables }}>
+        <div className='App'>
+          <ComponentForm />
+          <ComponentList
+            components={components}
+            variables={variables}
+            current={components["App"]}
+            availableProps={[]}
+          />
+          <button onClick={() => storeInLocalStorage(components)}>Save</button>
+          <button onClick={emptyLocalStorage}>Clear</button>
+        </div>
+      </VariablesContext.Provider>
+    </ComponentsContext.Provider>
   );
 };
 

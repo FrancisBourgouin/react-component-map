@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { VariablesForm } from "./VariablesForm";
 
 export const ComponentItem = props => {
-  const { current, variables, availableProps } = props;
+  const { variables, setVariables } = useContext("VariablesContext");
+
+  const { current, availableProps } = props;
   return (
     <>
       <h1>Component : {current.name}</h1>

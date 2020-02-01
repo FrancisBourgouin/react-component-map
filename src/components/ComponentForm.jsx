@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import uuidv4 from "uuid/v4";
 
-export const ComponentForm = ({
-  components,
-  setComponents
-  // maxDepth,
-  // setMaxDepth
-}) => {
+export const ComponentForm = () => {
+  const { components, setComponents } = useContext("ComponentsContext");
+
   const [formState, setFormState] = useState({
     name: "",
     color: ""
