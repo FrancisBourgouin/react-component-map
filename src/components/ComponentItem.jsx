@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { VariablesForm } from "./VariablesForm";
+import { VariablesContext } from "../hooks/contextHooks";
 
 export const ComponentItem = props => {
-  const { variables, setVariables } = useContext("VariablesContext");
+  const { variables, setVariables } = useContext(VariablesContext);
 
   const { current, availableProps } = props;
   return (

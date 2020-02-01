@@ -8,9 +8,7 @@ import {
   storeInLocalStorage,
   emptyLocalStorage
 } from "./helpers";
-
-const ComponentsContext = React.createContext();
-const VariablesContext = React.createContext();
+import { ComponentsContext, VariablesContext } from "./hooks/contextHooks";
 
 const App = () => {
   const [components, setComponents] = useState(exampleComponentMap);

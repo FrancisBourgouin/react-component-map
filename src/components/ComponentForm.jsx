@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import uuidv4 from "uuid/v4";
+import { ComponentsContext } from "../hooks/contextHooks";
 
 export const ComponentForm = () => {
-  const { components, setComponents } = useContext("ComponentsContext");
+  const { components, setComponents } = useContext(ComponentsContext);
 
   const [formState, setFormState] = useState({
     name: "",
