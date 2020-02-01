@@ -3,27 +3,23 @@ import uuidv4 from "uuid/v4";
 
 export const ComponentForm = ({
   components,
-  setComponents,
-  maxDepth,
-  setMaxDepth
+  setComponents
+  // maxDepth,
+  // setMaxDepth
 }) => {
   const [formState, setFormState] = useState({
-    parent: "",
-    name: ""
+    name: "",
+    color: ""
   });
-  //   const [name, setName] = useState("");
-  const { parent, name } = formState;
+  const { parent, name, color } = formState;
 
   const createComponent = e => {
     e.preventDefault();
     const id = uuidv4();
-    const depth = components[parent] ? components[parent].depth + 1 : 0;
-    if (depth > maxDepth) {
-      setMaxDepth(depth);
-    }
     setComponents(prev => {
       const old = { ...prev };
-      old[id] = { id, name, parent, depth };
+      old[parent].children.push(id);
+      old[id] = { id, name, variables: [], children: [], color };
       return old;
     });
   };
@@ -40,6 +36,12 @@ export const ComponentForm = ({
         }
         placeholder='Component name'
       ></input>
+      <input
+        type='color'
+        name='color'
+        value={color}
+        onChange={e => setFormState({ ...formState, color: e.target.value })}
+      />
       <select
         name='parent'
         onChange={e => setFormState({ ...formState, parent: e.target.value })}
