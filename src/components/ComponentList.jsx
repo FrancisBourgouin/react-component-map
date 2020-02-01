@@ -11,6 +11,7 @@ export const ComponentList = props => {
       <ComponentList
         current={components[componentId]}
         availableProps={componentId !== "App" ? current.variables : []}
+        key={componentId}
       />
     );
   });

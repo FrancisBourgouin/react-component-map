@@ -47,7 +47,11 @@ export const ComponentForm = () => {
         <option value='null'>Select parent component</option>
         {components &&
           Object.values(components).map(component => (
-            <option name={component.name} value={component.id}>
+            <option
+              name={component.name}
+              value={component.id}
+              key={component.id}
+            >
               {component.name}
             </option>
           ))}

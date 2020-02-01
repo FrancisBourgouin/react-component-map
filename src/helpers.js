@@ -8,7 +8,6 @@ export const emptyLocalStorage = () => {
 export const getLocalStorage = callback => {
   if (localStorage.getItem("componentMap")) {
     const cMap = JSON.parse(localStorage.getItem("componentMap"));
-    console.log(cMap);
     if (cMap) {
       callback(cMap);
     }
