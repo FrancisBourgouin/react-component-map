@@ -13,6 +13,7 @@ import { ComponentsContext, VariablesContext } from "./hooks/contextHooks";
 const App = () => {
   const [components, setComponents] = useState(exampleComponentMap);
   const [variables, setVariables] = useState(exampleVariablesList);
+  const [easterEgg, setEasterEgg] = useState(false);
 
   useEffect(() => {
     getLocalStorage(setComponents);
@@ -22,7 +23,10 @@ const App = () => {
     <ComponentsContext.Provider value={{ components, setComponents }}>
       <VariablesContext.Provider value={{ variables, setVariables }}>
         <div className='App'>
-          <h1>React component mapper</h1>
+          <h1 onDoubleClick={() => setEasterEgg(!easterEgg)}>
+            React component mapper
+          </h1>
+          {easterEgg && <input type='color'></input>}
           <ComponentForm />
           <section className='componentList'>
             <ComponentList current={components["App"]} availableProps={[]} />

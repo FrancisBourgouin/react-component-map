@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { VariablesContext, ComponentsContext } from "../hooks/contextHooks";
+import uuidv4 from "uuid/v4";
 
 export const VariablesForm = props => {
   const { variables, setVariables } = useContext(VariablesContext);
@@ -9,45 +10,74 @@ export const VariablesForm = props => {
     name: "",
     content: ""
   });
-  const [propForm, setPropForm] = useState({
-    name: "",
-    content: ""
-  });
+  const [propForm, setPropForm] = useState(null);
 
-  const addVariable = (event, action) => {
+  const addProp = event => {
     event.preventDefault();
+    const id = uuidv4();
+    const newProp = { ...variables[propForm], id };
+    newProp.type = "prop";
+
+    setVariables(prev => ({ ...prev, [id]: newProp }));
+    setComponents(prev => {
+      const oldComponents = { ...prev };
+      oldComponents[currentId].variables.push(id);
+      return oldComponents;
+    });
   };
 
-  const dummyVar = {
-    id: "1",
-    name: "listOfUsers",
-    content: "array",
-    type: "state"
+  const addLocalState = event => {
+    event.preventDefault();
+    const id = uuidv4();
+    const { name, content } = stateForm;
+    const newLocalState = { id, name, content, type: "state" };
+
+    setVariables(prev => ({ ...prev, [id]: newLocalState }));
+    setComponents(prev => {
+      const oldComponents = { ...prev };
+      oldComponents[currentId].variables.push(id);
+      return oldComponents;
+    });
   };
+
   return (
-    <>
-      <form action=''>
-        <h2>Add Local State</h2>
+    <article className='VariablesForm'>
+      <form onSubmit={addLocalState}>
+        <h2>Add Local State:</h2>
         <input
           type='text'
           placeholder='Enter variable name'
           value={stateForm.name}
-          onChange={event => setStateForm(event.target.value)}
+          onChange={event =>
+            setStateForm({ ...stateForm, name: event.target.value })
+          }
         ></input>
+        <select
+          value={stateForm.content}
+          onChange={event =>
+            setStateForm({ ...stateForm, content: event.target.value })
+          }
+        >
+          <option value='array'>Array</option>
+          <option value='object'>Object</option>
+          <option value='string'>String</option>
+          <option value='number'>Number</option>
+        </select>
         <input type='submit'></input>
       </form>
-      <form action=''>
-        <h2>Add Prop from Parent</h2>
+      <form onSubmit={addProp}>
+        <h2>Add Prop from Parent:</h2>
         {availableProps.length ? (
-          <select>
+          <select onChange={event => setPropForm(event.target.value)}>
             {availableProps.map(propId => (
               <option value={propId}>{variables[propId].name}</option>
             ))}
           </select>
         ) : (
-          <p>There is no props available from the parent</p>
+          <p>There is no props available from the parent.</p>
         )}
+        <input type='submit'></input>
       </form>
-    </>
+    </article>
   );
 };

@@ -3,7 +3,7 @@ import { VariablesForm } from "./VariablesForm";
 import { VariablesContext } from "../hooks/contextHooks";
 
 export const ComponentItem = props => {
-  const { variables, setVariables } = useContext(VariablesContext);
+  const { variables } = useContext(VariablesContext);
   const [visible, setVisible] = useState(false);
 
   const { current, availableProps } = props;
@@ -15,7 +15,9 @@ export const ComponentItem = props => {
         <ul>
           {current.variables.map(variableId => (
             <li key={`${current.id}${variableId}`}>
-              {variables[variableId].name} of type {variables[variableId].type}
+              <strong>({variables[variableId].type})</strong>{" "}
+              {variables[variableId].name} of type{" "}
+              {variables[variableId].content}
             </li>
           ))}
         </ul>
@@ -24,7 +26,7 @@ export const ComponentItem = props => {
         style={{ cursor: "pointer" }}
         onClick={() => setVisible(!visible)}
       >
-        Add variable
+        {visible ? "Hide variable form" : "Show variable form"}
       </button>
       {visible && (
         <VariablesForm {...{ currentId: current.id, availableProps }} />
