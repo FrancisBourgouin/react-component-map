@@ -8,26 +8,27 @@ export const ComponentItem = props => {
 
   const { current, availableProps } = props;
   return (
-    <>
-      <h1>
-        Component : {current.name}{" "}
-        <span
-          style={{ cursor: "pointer" }}
-          onClick={() => setVisible(!visible)}
-        >
-          +
-        </span>
-      </h1>
-      <ul>
-        {current.variables.map(variableId => (
-          <li key={`${current.id}${variableId}`}>
-            {variables[variableId].name} of type {variables[variableId].type}
-          </li>
-        ))}
-      </ul>
+    <article className='componentItem'>
+      <h1>{current.name} (Component)</h1>
+      <div>
+        <h2>Variables</h2>
+        <ul>
+          {current.variables.map(variableId => (
+            <li key={`${current.id}${variableId}`}>
+              {variables[variableId].name} of type {variables[variableId].type}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <button
+        style={{ cursor: "pointer" }}
+        onClick={() => setVisible(!visible)}
+      >
+        Add variable
+      </button>
       {visible && (
         <VariablesForm {...{ currentId: current.id, availableProps }} />
       )}
-    </>
+    </article>
   );
 };

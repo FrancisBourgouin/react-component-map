@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./App.scss";
 import { ComponentForm } from "./components/ComponentForm";
 import { ComponentList } from "./components/ComponentList";
 import { exampleComponentMap, exampleVariablesList } from "./dummy_data";
@@ -22,13 +22,11 @@ const App = () => {
     <ComponentsContext.Provider value={{ components, setComponents }}>
       <VariablesContext.Provider value={{ variables, setVariables }}>
         <div className='App'>
+          <h1>React component mapper</h1>
           <ComponentForm />
-          <ComponentList
-            components={components}
-            variables={variables}
-            current={components["App"]}
-            availableProps={[]}
-          />
+          <section className='componentList'>
+            <ComponentList current={components["App"]} availableProps={[]} />
+          </section>
           <button onClick={() => storeInLocalStorage(components)}>Save</button>
           <button onClick={emptyLocalStorage}>Clear</button>
         </div>

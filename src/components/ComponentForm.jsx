@@ -23,40 +23,43 @@ export const ComponentForm = () => {
   };
 
   return (
-    <form onSubmit={createComponent}>
-      <input
-        type='text'
-        name='name'
-        value={name}
-        onChange={
-          e => setFormState({ ...formState, name: e.target.value })
-          //   setName(e.target.value)
-        }
-        placeholder='Component name'
-      ></input>
-      <input
-        type='color'
-        name='color'
-        value={color}
-        onChange={e => setFormState({ ...formState, color: e.target.value })}
-      />
-      <select
-        name='parent'
-        onChange={e => setFormState({ ...formState, parent: e.target.value })}
-      >
-        <option value='null'>Select parent component</option>
-        {components &&
-          Object.values(components).map(component => (
-            <option
-              name={component.name}
-              value={component.id}
-              key={component.id}
-            >
-              {component.name}
-            </option>
-          ))}
-      </select>
-      <input type='submit' value='Add Component'></input>
-    </form>
+    <section className='componentForm'>
+      <h2>Create a new component</h2>
+      <form onSubmit={createComponent}>
+        <input
+          type='text'
+          name='name'
+          value={name}
+          onChange={
+            e => setFormState({ ...formState, name: e.target.value })
+            //   setName(e.target.value)
+          }
+          placeholder='Component name'
+        ></input>
+        {/* <input
+          type='color'
+          name='color'
+          value={color}
+          onChange={e => setFormState({ ...formState, color: e.target.value })}
+        /> */}
+        <select
+          name='parent'
+          onChange={e => setFormState({ ...formState, parent: e.target.value })}
+        >
+          <option value='null'>Select parent component</option>
+          {components &&
+            Object.values(components).map(component => (
+              <option
+                name={component.name}
+                value={component.id}
+                key={component.id}
+              >
+                {component.name}
+              </option>
+            ))}
+        </select>
+        <input type='submit' value='Add Component'></input>
+      </form>
+    </section>
   );
 };

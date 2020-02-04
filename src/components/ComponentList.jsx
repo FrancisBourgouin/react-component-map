@@ -16,7 +16,7 @@ export const ComponentList = props => {
     );
   });
   return (
-    <section style={{ backgroundColor: current.color }}>
+    <section>
       <ComponentItem current={current} availableProps={availableProps} />
       {mappedComponents}
     </section>
