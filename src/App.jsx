@@ -34,8 +34,6 @@ const App = () => {
 
   const removeVariable = (variableId, componentId) => {
     // "1": { id: "1", name: "listOfUsers", content: "array", type: "state" }
-
-    const { name, type } = variables[variableId];
     const updatedVariables = { ...variables };
 
     delete updatedVariables[variableId];
@@ -49,6 +47,8 @@ const App = () => {
   };
 
   const removeComponent = componentId => {
+    // c3: {id: "c3", name: "BOB", children: ["d4"], variables: ["2", "3"], color: "#B0B" }
+
     const component = components[componentId];
 
     if (!component.children.length) {
