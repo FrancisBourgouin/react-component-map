@@ -1,13 +1,23 @@
-$background-color: rgb(75, 133, 240);
+:root {
+  --main-bg-color: rgb(76, 133, 240);
+  --background-color: rgba(76, 133, 240, 0.2);
+}
 
 .App {
   & > h1 {
     text-align: center;
+    cursor: pointer;
+  }
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
 
 .componentForm {
-  background: rgba($background-color, 0.2);
+  background: var(--background-color);
   margin: 1em auto;
   padding: 1em 2em 2em;
 
@@ -36,7 +46,7 @@ $background-color: rgb(75, 133, 240);
   section {
     padding: 1em 2em;
     margin: 1em 0;
-    background: rgba($background-color, 0.2);
+    background: var(--background-color);
   }
   h1 {
     font-size: 1.5rem;
@@ -54,7 +64,7 @@ $background-color: rgb(75, 133, 240);
     font-size: 1rem;
   }
   div {
-    border: 0.25em solid rgba($background-color, 0.1);
+    border: 0.25em solid var(--background-color);
     padding: 0.5em 1em;
     margin: 1em 0;
     h2 {
