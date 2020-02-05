@@ -1,25 +1,40 @@
 import React, { useContext, useState } from "react";
 import { VariablesForm } from "./VariablesForm";
-import { VariablesContext } from "../hooks/contextHooks";
+import { VariablesContext, ComponentsContext } from "../hooks/contextHooks";
 
 export const ComponentItem = props => {
-  const { variables } = useContext(VariablesContext);
+  const { variables, removeVariable } = useContext(VariablesContext);
+  const { removeComponent } = useContext(ComponentsContext);
   const [visible, setVisible] = useState(false);
 
   const { current, availableProps } = props;
   return (
     <article className='componentItem'>
-      <h1>{current.name} (Component)</h1>
+      <h1>
+        {current.name} (Component)
+        <button onClick={() => removeComponent(current.id)}>
+          Delete component
+        </button>
+      </h1>
       <div>
         <h2>Variables</h2>
         <ul>
-          {current.variables.map(variableId => (
-            <li key={`${current.id}${variableId}`}>
-              <strong>({variables[variableId].type})</strong>{" "}
-              {variables[variableId].name} of type{" "}
-              {variables[variableId].content}
-            </li>
-          ))}
+          {current.variables.map(variableId => {
+            if (variables[variableId]) {
+              return (
+                <li key={`${current.id}${variableId}`}>
+                  <strong>({variables[variableId].type})</strong>{" "}
+                  {variables[variableId].name} of type{" "}
+                  {variables[variableId].content}
+                  <button
+                    onClick={() => removeVariable(variableId, current.id)}
+                  >
+                    Delete variable
+                  </button>
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
       <button

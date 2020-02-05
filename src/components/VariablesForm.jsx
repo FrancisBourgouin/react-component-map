@@ -8,7 +8,7 @@ export const VariablesForm = props => {
   const { availableProps, currentId } = props;
   const [stateForm, setStateForm] = useState({
     name: "",
-    content: ""
+    content: "Array"
   });
   const [propForm, setPropForm] = useState(null);
 
@@ -58,25 +58,27 @@ export const VariablesForm = props => {
             setStateForm({ ...stateForm, content: event.target.value })
           }
         >
-          <option value='array'>Array</option>
-          <option value='object'>Object</option>
-          <option value='string'>String</option>
-          <option value='number'>Number</option>
+          <option value='Array'>Array</option>
+          <option value='Object'>Object</option>
+          <option value='String'>String</option>
+          <option value='Number'>Number</option>
         </select>
         <input type='submit'></input>
       </form>
       <form onSubmit={addProp}>
         <h2>Add Prop from Parent:</h2>
         {availableProps.length ? (
-          <select onChange={event => setPropForm(event.target.value)}>
-            {availableProps.map(propId => (
-              <option value={propId}>{variables[propId].name}</option>
-            ))}
-          </select>
+          <>
+            <select onChange={event => setPropForm(event.target.value)}>
+              {availableProps.map(propId => (
+                <option value={propId}>{variables[propId].name}</option>
+              ))}
+            </select>
+            <input type='submit'></input>
+          </>
         ) : (
           <p>There is no props available from the parent.</p>
         )}
-        <input type='submit'></input>
       </form>
     </article>
   );

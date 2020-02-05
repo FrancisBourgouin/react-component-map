@@ -7,13 +7,15 @@ export const ComponentList = props => {
 
   const { current, availableProps } = props;
   const mappedComponents = current.children.map(componentId => {
-    return (
-      <ComponentList
-        current={components[componentId]}
-        availableProps={componentId !== "App" ? current.variables : []}
-        key={componentId}
-      />
-    );
+    if (components[componentId]) {
+      return (
+        <ComponentList
+          current={components[componentId]}
+          availableProps={componentId !== "App" ? current.variables : []}
+          key={componentId}
+        />
+      );
+    }
   });
   return (
     <section>

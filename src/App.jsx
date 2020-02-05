@@ -31,9 +31,50 @@ const App = () => {
     );
     setBackgroundValue(color);
   };
+
+  const removeVariable = (variableId, componentId) => {
+    // "1": { id: "1", name: "listOfUsers", content: "array", type: "state" }
+
+    const { name, type } = variables[variableId];
+    const updatedVariables = { ...variables };
+
+    delete updatedVariables[variableId];
+    const cleanedComponent = components[componentId];
+    cleanedComponent.variables = components[componentId].variables.filter(
+      id => id !== variableId
+    );
+
+    setVariables(updatedVariables);
+    setComponents(prev => ({ ...prev, [componentId]: cleanedComponent }));
+  };
+
+  const removeComponent = componentId => {
+    const component = components[componentId];
+
+    if (!component.children.length) {
+      const updatedVariables = { ...variables };
+      const updatedComponents = { ...components };
+
+      component.variables.forEach(id => delete updatedVariables[id]);
+      delete updatedComponents[componentId];
+
+      for (const key of Object.keys(updatedComponents)) {
+        updatedComponents[key].children = updatedComponents[
+          key
+        ].children.filter(id => id !== componentId);
+      }
+
+      setVariables(updatedVariables);
+      setComponents(updatedComponents);
+    }
+  };
   return (
-    <ComponentsContext.Provider value={{ components, setComponents }}>
-      <VariablesContext.Provider value={{ variables, setVariables }}>
+    <ComponentsContext.Provider
+      value={{ components, setComponents, removeComponent }}
+    >
+      <VariablesContext.Provider
+        value={{ variables, setVariables, removeVariable }}
+      >
         <div className='App'>
           <h1 onDoubleClick={() => setEasterEgg(!easterEgg)}>
             React component mapper
