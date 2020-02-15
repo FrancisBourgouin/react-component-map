@@ -41,7 +41,6 @@ export const baseComponentMap = {
     id: "App",
     name: "App",
     children: [],
-    variables: [],
-    color: "#BADA55"
+    variables: []
   }
 }
