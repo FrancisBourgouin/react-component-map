@@ -34,3 +34,14 @@ export const exampleVariablesList = {
   "2": { id: "2", name: "listOfChickens", content: "array", type: "props" },
   "3": { id: "3", name: "currentUser", content: "array", type: "props" }
 };
+
+
+export const baseComponentMap = {
+  App: {
+    id: "App",
+    name: "App",
+    children: [],
+    variables: [],
+    color: "#BADA55"
+  }
+}
