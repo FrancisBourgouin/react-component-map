@@ -5,9 +5,13 @@ import { ComponentForm } from "./components/ComponentForm";
 import { ComponentList } from "./components/ComponentList";
 import { baseComponentMap } from "./dummy_data";
 import {
-  getLocalStorage,
-  storeInLocalStorage,
-  emptyLocalStorage
+  getLSComponents,
+  storeLSComponents,
+  getLSVariables,
+  storeLSVariables,
+  emptyLocalStorage,
+  componentJSONLink,
+  variableJSONLink
 } from "./helpers";
 import { ComponentsContext, VariablesContext } from "./hooks/contextHooks";
 import { CompactPicker } from "react-color";
@@ -19,7 +23,8 @@ const App = () => {
   const [backgroundValue, setBackgroundValue] = useState(null);
 
   useEffect(() => {
-    getLocalStorage(setComponents);
+    getLSComponents(setComponents);
+    getLSVariables(setVariables);
   }, []);
 
   const setBackground = color => {
@@ -89,12 +94,19 @@ const App = () => {
               />
             </header>
           )}
+          <section className="saveLoad">
+          <button onClick={() => {
+            storeLSComponents(components)
+            storeLSVariables(variables)
+            }}>Save</button>
+          <button onClick={emptyLocalStorage}>Clear</button>
+          <a href={componentJSONLink(components)} download="components.json">Save Components</a>
+          <a href={variableJSONLink(variables)} download="variables.json">Save variables</a>
+          </section>
           <ComponentForm />
           <section className='componentList'>
             <ComponentList current={components["App"]} availableProps={[]} />
           </section>
-          <button onClick={() => storeInLocalStorage(components)}>Save</button>
-          <button onClick={emptyLocalStorage}>Clear</button>
         </div>
       </VariablesContext.Provider>
     </ComponentsContext.Provider>
