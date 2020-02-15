@@ -12,9 +12,10 @@ export const ComponentItem = props => {
     <article className='componentItem'>
       <h1>
         {current.name} (Component)
-        <button onClick={() => removeComponent(current.id)}>
+        {!current.children.length && current.name !== 'App' && <button onClick={() => removeComponent(current.id)}>
           Delete component
         </button>
+}
       </h1>
       <div>
         <h2>Variables</h2>
