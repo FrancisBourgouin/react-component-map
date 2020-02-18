@@ -20,6 +20,7 @@ export const ComponentForm = () => {
       old[id] = { id, name, variables: [], children: [], color };
       return old;
     });
+    setFormState({...formState, name:""})
   };
 
   return (

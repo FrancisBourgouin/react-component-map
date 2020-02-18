@@ -43,14 +43,45 @@
 }
 
 .componentList {
+  h1 {
+    font-size: 1.5rem;
+  }
+  article{
+    width:100%;
+  }
+
   section {
     padding: 1em 2em;
     margin: 1em 0;
     background: var(--background-color);
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    box-sizing:border-box;
+
+    &.hasChildren{
+      width:100%;
+    } 
+    &.emptyChildren{
+      width:30%;
+    } 
+    
   }
-  h1 {
-    font-size: 1.5rem;
-  }
+
+  // & > section {
+  //   flex-direction: column;
+  //   & > section{
+  //     flex-direction: row;
+  //     & > section:last-of-type{
+  //       margin-right:auto;
+  //     }
+  //     & > section{
+  //       flex-direction: column;;
+
+  //     }
+  //   } 
+  // }
+  
 }
 
 .componentItem {

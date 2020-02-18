@@ -9,14 +9,24 @@ export const ComponentItem = props => {
 
   const { current, availableProps } = props;
   return (
-    <article className='componentItem'>
+    <article className="">
       <h1>
         {current.name} (Component)
         {!current.children.length && current.name !== 'App' && <button onClick={() => removeComponent(current.id)}>
-          Delete component
+            Delete component
+          </button>       
+        }
+        <button
+        style={{ cursor: "pointer" }}
+        onClick={() => setVisible(!visible)}
+      >
+        {visible ? "Hide variable form" : "Show variable form"}
         </button>
-}
+
       </h1>
+      {visible && (
+          <VariablesForm {...{ currentId: current.id, availableProps }} />
+        )}
       <div>
         <h2>Variables</h2>
         <ul>
@@ -38,15 +48,8 @@ export const ComponentItem = props => {
           })}
         </ul>
       </div>
-      <button
-        style={{ cursor: "pointer" }}
-        onClick={() => setVisible(!visible)}
-      >
-        {visible ? "Hide variable form" : "Show variable form"}
-      </button>
-      {visible && (
-        <VariablesForm {...{ currentId: current.id, availableProps }} />
-      )}
+      
+      
     </article>
   );
 };
